@@ -11,10 +11,14 @@ class QuestionInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
+    list_display = ['content', 'grade']  # <--- Added list_display
 
 class LessonInline(admin.StackedInline):
     model = Lesson
     extra = 5
+
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ['title']  # <--- Added LessonAdmin
 
 class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
@@ -23,7 +27,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
 
 admin.site.register(Course, CourseAdmin)
-admin.site.register(Lesson)
+admin.site.register(Lesson, LessonAdmin)  # <--- Registered LessonAdmin
 admin.site.register(Instructor)
 admin.site.register(Learner)
 admin.site.register(Question, QuestionAdmin)
